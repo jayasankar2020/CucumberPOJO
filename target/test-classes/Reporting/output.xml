@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="61.260597">
+<testcase classname="verifying adactin details" name="verifying login and booking details." time="61.260597">
+<system-out><![CDATA[Given user is on adactin page...............................................passed
+When user enters details....................................................passed
+And User should verify the message..........................................passed
+And user should search Hotels...............................................passed
+And user should enter search button.........................................passed
+And user should click radio button..........................................passed
+And user should payment.....................................................passed
+]]></system-out>
+</testcase>
+</testsuite>

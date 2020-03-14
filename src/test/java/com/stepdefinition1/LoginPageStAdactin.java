@@ -15,33 +15,33 @@ import org.pages.LoginPage;
 import org.pages.SearchHotel;
 import org.pages.SelectHotel;
 
+import com.managers.PageObjectManager;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class LoginPageStAdactin extends LibGlobal {
 	public WebDriver driver;
-	LoginPage page;
-	SearchHotel page1;
-
+	PageObjectManager pageObjectManager;
 	@Given("user is on adactin page")
 	public void user_is_on_adactin_page() {
 		driver = getDriver();
 		loadUrl("https://adactin.com/HotelApp/");
 	}
-
 	@When("user enters details")
-	public void user_enters_details(io.cucumber.datatable.DataTable data) throws InterruptedException {
-		page = new LoginPage();
+	public void user_enters_details(io.cucumber.datatable.DataTable data) throws InterruptedException, IOException {
+		pageObjectManager = new PageObjectManager();
 		List<Map<String, String>> emp = data.asMaps();
 		String S1 = emp.get(1).get("userName");
-		WebElement name = page.getTxtUsername();
+		WebElement name = pageObjectManager.getLoginPage().getTxtUsername();
 		type(name, S1);
 		String S2 = emp.get(1).get("passWord");
-		WebElement pass = page.getTxtPassWord();
+		WebElement pass = pageObjectManager.getLoginPage().getTxtPassWord();
 		type(pass, S2);
-		WebElement btnLogin = page.getBtnLogin();
+		WebElement btnLogin = pageObjectManager.getLoginPage().getBtnLogin();
 		btnLogin.click();
+		ScreensShot();
 	}
 
 	@When("User should verify the message")
@@ -51,88 +51,91 @@ public class LoginPageStAdactin extends LibGlobal {
 
 	@When("user should search Hotels")
 	public void user_should_search_Hotels(io.cucumber.datatable.DataTable data) throws IOException {
-		page1 = new SearchHotel();
+		pageObjectManager = new PageObjectManager();
 		List<Map<String, String>> emp = data.asMaps();
 		String s3 = emp.get(0).get("location");
-		WebElement loction = page1.getLoction();
+		WebElement loction = pageObjectManager.getSearchHotel().getLoction();
 		type(loction, s3);
 		String s4 = emp.get(0).get("Hotels");
-		WebElement hotels = page1.getHotels();
+		WebElement hotels = pageObjectManager.getSearchHotel().getHotels();
 		type(hotels, s4);
 		String s5 = emp.get(0).get("roomType");
-		WebElement roomType = page1.getRoomType();
+		WebElement roomType = pageObjectManager.getSearchHotel().getRoomType();
 		type(roomType, s5);
 		String s6 = emp.get(0).get("numberOfRooms");
-		WebElement roomNO = page1.getRoomNO();
+		WebElement roomNO = pageObjectManager.getSearchHotel().getRoomNO();
 		type(roomNO, s6);
 		String s7 = emp.get(0).get("adultsPerRoom");
-		WebElement adultRoom = page1.getAdultRoom();
+		WebElement adultRoom = pageObjectManager.getSearchHotel().getAdultRoom();
 		type(adultRoom, s7);
 		String s8 = emp.get(0).get("childrenPerRoom");
-		WebElement childRoom = page1.getChildRoom();
+		WebElement childRoom = pageObjectManager.getSearchHotel().getChildRoom();
 		type(childRoom, s8);
 		ScreensShot();
 	}
 
 	@When("user should enter search button")
 	public void user_should_enter_search_button() throws IOException {
-		WebElement submit = page1.getSubmit();
+		WebElement submit = pageObjectManager.getSearchHotel().getSubmit();
 		btnClick(submit);
 		ScreensShot();
 	}
 
 	@When("user should click radio button")
 	public void user_should_click_radio_button() {
-		SelectHotel page = new SelectHotel();
-		WebElement radio = page.getRadio();
+		
+		WebElement radio = pageObjectManager.getSelectHotel().getRadio();
 		btnClick(radio);
-		WebElement enterContinue = page.getEnterContinue();
+		WebElement enterContinue = pageObjectManager.getSelectHotel().getEnterContinue();
 		btnClick(enterContinue);
 	}
 
 	@When("user should payment")
 	public void user_should_payment(io.cucumber.datatable.DataTable data) throws IOException, InterruptedException {
-		BookHotel page = new BookHotel();
+
+
 		List<Map<String, String>> emp = data.asMaps();
 		String s9 = emp.get(0).get("firstName");
-		WebElement fn = page.getFn();
+		WebElement fn = pageObjectManager.getBookHotel().getFn();
 		type(fn, s9);
 		String s10 = emp.get(0).get("lastName");
-		WebElement ln = page.getLn();
+		WebElement ln = pageObjectManager.getBookHotel().getLn();
 		type(ln, s10);
 		String s11 = emp.get(0).get("billingAddress");
-		WebElement ad = page.getAd();
+		WebElement ad = pageObjectManager.getBookHotel().getAd();
 		type(ad, s11);
 		String s12 = emp.get(0).get("creditCardNumber");
-		WebElement crdNum = page.getCrdNum();
+		WebElement crdNum = pageObjectManager.getBookHotel().getCrdNum();
 		type(crdNum, s12);
 		String s13 = emp.get(0).get("creditCardType");
-		WebElement crdType = page.getCrdType();
+		WebElement crdType = pageObjectManager.getBookHotel().getCrdType();
 		type(crdType, s13);
 		String s14 = emp.get(0).get("expiryMonth");
-		WebElement expMonth = page.getExpMonth();
+		WebElement expMonth = pageObjectManager.getBookHotel().getExpMonth();
 		type(expMonth, s14);
 		String s15 = emp.get(0).get("year");
-		WebElement expYear = page.getExpYear();
+		WebElement expYear = pageObjectManager.getBookHotel().getExpYear();
 		type(expYear, s15);
 		String s16 = emp.get(0).get("cvvNumber");
-		WebElement ccvNum = page.getCcvNum();
+		WebElement ccvNum = pageObjectManager.getBookHotel().getCcvNum();
 		type(ccvNum, s16);
-		WebElement bookBtn = page.getBookBtn();
+		WebElement bookBtn = pageObjectManager.getBookHotel().getBookBtn();
 		btnClick(bookBtn);
+		ScreensShot();
 		Thread.sleep(6000);
-		ConfirmationPage page1 = new ConfirmationPage();
-		WebElement orderid = page1.getOrderid();
+		
+		WebElement orderid = pageObjectManager.getConfirmationPage().getOrderid();
 		String attribute = orderid.getAttribute("value");
-		WebElement booked = page1.getBooked();
+		WebElement booked = pageObjectManager.getConfirmationPage().getBooked();
 		btnClick(booked);
 		WebElement cancell = driver
 				.findElement(By.xpath("(//input[@value='" + attribute + "']/parent::td/preceding-sibling::td)[1]"));
 		cancell.click();
-		WebElement cancel = page1.getCancel();
+		WebElement cancel = pageObjectManager.getConfirmationPage().getCancel();
 		btnClick(cancel);
 		Alert a= driver.switchTo().alert();
 		a.accept();
+		ScreensShot();
 	}
 
 	/*
